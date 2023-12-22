@@ -45,6 +45,8 @@ def computer_move_is_true(r, c): #компьютер уже сделал сво�
     
 def computer_move(player_1, player_2): #компьютер делает свой ход
         global free_places, computer
+        if all_buttons[1][1]["text"] == "":
+                computer_move_is_true(1, 1)
         for i in range(3): #Выбор наилучшей стратегии
             if all_buttons[i][0]["text"] == all_buttons[i][1]["text"] == player_1 and all_buttons[i][2]["text"] == "":
                 computer_move_is_true(i, 2)
@@ -95,10 +97,9 @@ def check_win(): #проверка выигрыша: выиграл ли уже 
 
 def start_new_game(root_2): #начать новую игру
     root_2.destroy()
-    global player_1, player_2, free_places
+    global free_places
     free_places = 9
     winner = ""
-    player_1, player_2 = player_2, player_1
     for r in range(3):
         for c in range(3):
             all_buttons[r][c]["text"] = ""
@@ -109,7 +110,7 @@ def game_over(): #игра завершена
     root_2 = Tk()
     root_2.title("Игра окончена!")
     root_2.geometry("400x100+450+300")
-    root_2["background"] = "floral white"
+    root_2["background"] = "#F8F8FF"
     winner_name = ""
     if winner == player_1:
         winner_name = "Вы победили!"
@@ -118,12 +119,10 @@ def game_over(): #игра завершена
     else:
         winner_name = "Ничья"
     font2 = font.Font(root_2, family= "Verdana", size=13, weight="bold", slant="italic")
-    label_1 = ttk.Label(root_2, text = f"{winner_name}", font = font2, background = "floral white")
+    label_1 = ttk.Label(root_2, text = f"{winner_name}", font = font2, background = "#F8F8FF")
     label_1.place(x = 120, y = 10, width = 300)
-    label_2 = ttk.Label(root_2, text = f"Вы играли за {player_1}, теперь играете за {player_2}", font = font2, background = "floral white")
-    label_2.place(x = 30, y = 40)
     btn_1 = Button(root_2, text = "Новая игра", command = lambda: start_new_game(root_2), background = "white", activebackground = "white")
-    btn_1.place(x = 160, y = 70)
+    btn_1.place(x = 160, y = 40)
     
 root = Tk()
 root.title("Крестики-нолики")
